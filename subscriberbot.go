@@ -42,6 +42,9 @@ func main() {
 MessageCreate event fired when someone sends a message.
 */
 func messageCreate(session *discordgo.Session, messageCreate *discordgo.MessageCreate) {
+	if messageCreate.GuildID != "" {
+		return
+	}
 	if strings.ToLower(messageCreate.Content) == "subscribe" {
 		if subscribeUser(session, messageCreate.Author, messageCreate.ChannelID) {
 			log.Println("Subscribed user:", messageCreate.Author.Username, "on channel", messageCreate.ChannelID)
